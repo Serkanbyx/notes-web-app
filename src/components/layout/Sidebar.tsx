@@ -4,6 +4,7 @@ import SearchBar from '../ui/SearchBar';
 import Button from '../ui/Button';
 import NoteCard from '../notes/NoteCard';
 import TagBadge from '../tags/TagBadge';
+import Footer from './Footer';
 
 /**
  * Sidebar component with search, tags filter, and notes list
@@ -127,6 +128,9 @@ function Sidebar() {
           Yeni Not
         </Button>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </aside>
   );
 }
