@@ -5,7 +5,7 @@ import {
   selectAddTag,
   selectDeleteTag,
 } from '../../store/useNotesStore';
-import { TAG_COLORS } from '../../types';
+import { TAG_COLORS, TagColor } from '../../types';
 import TagBadge from './TagBadge';
 import Button from '../ui/Button';
 
@@ -30,7 +30,7 @@ const TagSelector = memo(function TagSelector({
 
   const [isCreating, setIsCreating] = useState(false);
   const [newTagName, setNewTagName] = useState('');
-  const [newTagColor, setNewTagColor] = useState(TAG_COLORS[0]);
+  const [newTagColor, setNewTagColor] = useState<TagColor>(TAG_COLORS[0]);
 
   const handleToggleTag = useCallback(
     (tagId: string) => {
@@ -71,7 +71,7 @@ const TagSelector = memo(function TagSelector({
     setNewTagName('');
   }, []);
 
-  const handleColorSelect = useCallback((color: string) => {
+  const handleColorSelect = useCallback((color: TagColor) => {
     setNewTagColor(color);
   }, []);
 
