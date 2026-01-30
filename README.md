@@ -1,6 +1,6 @@
 # 📝 Notes Web App
 
-A modern, responsive note-taking application with Markdown support, tagging system, and auto-save functionality. Organize your notes efficiently with a beautiful split-layout interface.
+A modern, responsive note-taking application with Markdown support, tagging system, dark mode, keyboard shortcuts, and auto-save functionality. Organize your notes efficiently with a beautiful split-layout interface.
 
 [![Created by Serkanby](https://img.shields.io/badge/Created%20by-Serkanby-blue?style=flat-square)](https://serkanbayraktar.com/)
 [![GitHub](https://img.shields.io/badge/GitHub-Serkanbyx-181717?style=flat-square&logo=github)](https://github.com/Serkanbyx)
@@ -10,16 +10,22 @@ A modern, responsive note-taking application with Markdown support, tagging syst
 
 - **CRUD Operations**: Create, read, update, and delete notes seamlessly
 - **Markdown Support**: Rich text formatting with live Markdown preview
-- **Tagging System**: Categorize and organize your notes with custom tags
+- **Tagging System**: Categorize and organize your notes with custom colored tags
 - **Smart Search**: Quick search across titles and content
-- **Auto-Save**: Automatic saving with 1-second debounce delay
-- **Offline Support**: Local-first approach using localStorage
+- **Auto-Save**: Automatic saving with 1-second debounce delay and status indicator
+- **Offline Support**: Local-first approach using localStorage with persistence
 - **Responsive Design**: Mobile and desktop friendly split layout
 - **Multiple View Modes**: Write, Preview, and Split view for Markdown editing
+- **Dark Mode**: System preference detection with manual toggle (Light/Dark/System)
+- **Keyboard Shortcuts**: Productivity-boosting shortcuts with visual guide modal
+- **Error Handling**: Graceful error boundaries with fallback UI
+- **Toast Notifications**: Visual feedback for user actions
+- **Accessible Modals**: WCAG-compliant dialogs with focus trap
+- **Code Splitting**: Lazy-loaded pages for optimal performance
 
 ## Live Demo
 
-[🚀 View Live Demo](https://your-demo-url.netlify.app)
+[🚀 View Live Demo](https://notes-web-apppp.netlify.app/)
 
 ## Screenshots
 
@@ -35,16 +41,20 @@ Full-featured Markdown editor with real-time preview and tag management.
 
 Side-by-side editing and preview for the best writing experience.
 
+### Dark Mode
+
+Beautiful dark theme with system preference detection.
+
 ## Technologies
 
 - **React 18**: Modern UI library with hooks and functional components
 - **TypeScript**: Type-safe development with enhanced IDE support
 - **Vite**: Lightning-fast build tool and development server
-- **Zustand**: Lightweight and flexible state management
+- **Zustand**: Lightweight state management with persist and devtools middleware
 - **React Hook Form**: Performant form handling with minimal re-renders
 - **Zod**: TypeScript-first schema validation
 - **React Router v6**: Declarative routing for single-page applications
-- **Tailwind CSS**: Utility-first CSS framework for rapid UI development
+- **Tailwind CSS**: Utility-first CSS framework with dark mode support
 - **react-markdown**: Safe Markdown to React component rendering
 
 ## Installation
@@ -86,11 +96,25 @@ npm run preview
 
 ## Usage
 
-1. **Create a New Note**: Click the "Yeni Not" button in the sidebar
+1. **Create a New Note**: Click the "Yeni Not" button or press `Ctrl+N` (⌘+N on Mac)
 2. **Enter Title**: Provide a descriptive title for your note (required)
 3. **Add Tags**: Select existing tags or create new ones to categorize your note
 4. **Write Content**: Use Markdown syntax for rich text formatting
 5. **Auto-Save**: Your note is automatically saved as you type
+
+### Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+N` / `⌘+N` | Create new note |
+| `Ctrl+F` / `⌘+F` | Focus search |
+| `Ctrl+S` / `⌘+S` | Save note |
+| `Ctrl+/` / `⌘+/` | Show shortcuts modal |
+| `Ctrl+1` / `⌘+1` | Write mode |
+| `Ctrl+2` / `⌘+2` | Preview mode |
+| `Ctrl+3` / `⌘+3` | Split mode |
+
+Press `Ctrl+/` or click the keyboard icon in the footer to view all shortcuts.
 
 ### Markdown Editor Modes
 
@@ -103,8 +127,13 @@ npm run preview
 ### Working with Tags
 
 - Click on existing tags to add/remove them from a note
-- Use "Yeni etiket oluştur" to create custom tags
+- Use "Yeni etiket oluştur" to create custom tags with colors
 - Filter notes by tags using the sidebar tag filter
+
+### Dark Mode
+
+- Click the theme toggle in the footer to switch between Light, Dark, and System modes
+- System mode automatically follows your OS preference
 
 ### Search
 
@@ -114,36 +143,61 @@ Use the search bar in the sidebar to find notes by title or content.
 
 ### State Management
 
-The application uses Zustand for centralized state management:
+The application uses Zustand with persist middleware for centralized state management:
 
 ```typescript
 interface NotesState {
   notes: Note[];
   tags: Tag[];
+  tagsById: Record<string, Tag>; // O(1) tag lookup
   searchQuery: string;
   selectedTags: string[];
   // ... actions
 }
 ```
 
-### Auto-Save Implementation
+### Optimized Selectors
 
-Notes are automatically saved using a custom debounce hook:
+Components subscribe only to the state they need using selectors:
 
 ```typescript
-const useAutoSave = (value: string, delay: number) => {
-  // Debounced save logic with 1 second delay
+// Selector for filtered notes
+export const selectFilteredNotes = (state: NotesState) => {
+  const { notes, searchQuery, selectedTags } = state;
+  return notes.filter(/* filtering logic */);
 };
+```
+
+### Auto-Save Implementation
+
+Notes are automatically saved using a custom debounce hook with status tracking:
+
+```typescript
+const { save, status, error } = useAutoSave(handleSave, 1000);
+// status: 'idle' | 'saving' | 'saved' | 'error'
 ```
 
 ### Data Persistence
 
-All data is stored in localStorage for offline-first functionality:
+All data is stored in localStorage with Zustand persist middleware:
 
 ```typescript
-const useLocalStorage = <T>(key: string, initialValue: T) => {
-  // localStorage sync with React state
-};
+persist(
+  (set) => ({ /* store */ }),
+  {
+    name: 'notes-storage',
+    partialize: (state) => ({ notes: state.notes, tags: state.tags }),
+  }
+)
+```
+
+### Theme Management
+
+Dark mode is managed through a dedicated theme store:
+
+```typescript
+type Theme = 'light' | 'dark' | 'system';
+// Applies 'dark' class to document for Tailwind dark mode
 ```
 
 ## Project Structure
@@ -151,17 +205,18 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
 ```
 src/
 ├── components/
+│   ├── error/         # Error boundary component
 │   ├── layout/        # Layout components (Sidebar, SplitLayout, Footer)
 │   ├── notes/         # Note components (NoteCard, NoteEditor, NoteForm)
 │   ├── tags/          # Tag components (TagBadge, TagSelector)
-│   └── ui/            # Base UI components (Button, Input, SearchBar)
-├── hooks/             # Custom hooks (useAutoSave, useLocalStorage)
-├── pages/             # Page components (NotesListPage, NoteDetailPage)
-├── store/             # Zustand store (useNotesStore)
+│   └── ui/            # Base UI components (Button, Input, Modal, Toast, etc.)
+├── hooks/             # Custom hooks (useAutoSave, useLocalStorage, useKeyboardShortcuts)
+├── pages/             # Page components (NotesListPage, NoteDetailPage, NotFoundPage)
+├── store/             # Zustand stores (useNotesStore, useThemeStore, useUIStore)
 ├── types/             # TypeScript type definitions
 ├── utils/             # Utility functions (storage, validation)
-├── App.tsx            # Main application component
-├── main.tsx           # Entry point
+├── App.tsx            # Main application component with routing
+├── main.tsx           # Entry point with providers
 └── index.css          # Global styles and Tailwind imports
 ```
 
@@ -169,19 +224,20 @@ src/
 
 ### Adding New Tag Colors
 
-Edit the tag color options in the TagSelector component:
+Edit the tag color options in `src/types/index.ts`:
 
 ```typescript
-const tagColors = [
-  { name: 'blue', value: '#3B82F6' },
-  { name: 'green', value: '#10B981' },
+export const TAG_COLORS = [
+  '#ef4444', // red
+  '#f97316', // orange
+  '#eab308', // yellow
   // Add your custom colors here
-];
+] as const;
 ```
 
 ### Changing Auto-Save Delay
 
-Modify the debounce delay in the NoteEditor component:
+Modify the debounce delay in the NoteDetailPage component:
 
 ```typescript
 const AUTOSAVE_DELAY = 1000; // Change to your preferred delay in ms
@@ -189,10 +245,11 @@ const AUTOSAVE_DELAY = 1000; // Change to your preferred delay in ms
 
 ### Styling
 
-The application uses Tailwind CSS. Customize the theme in `tailwind.config.js`:
+The application uses Tailwind CSS with dark mode support. Customize the theme in `tailwind.config.js`:
 
 ```javascript
 module.exports = {
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -205,18 +262,39 @@ module.exports = {
 }
 ```
 
+### Adding Keyboard Shortcuts
+
+Add new shortcuts in `src/hooks/useKeyboardShortcuts.ts`:
+
+```typescript
+{
+  key: 'e',
+  ctrl: true,
+  description: 'Export note',
+  action: () => handleExport(),
+}
+```
+
 ## Features in Detail
 
 ### Completed Features
 
 - ✅ Create, edit, and delete notes
 - ✅ Markdown editor with live preview
-- ✅ Tag creation and management
+- ✅ Tag creation and management with colors
 - ✅ Search functionality
-- ✅ Auto-save with debounce
+- ✅ Auto-save with debounce and status indicator
 - ✅ Responsive split layout
-- ✅ localStorage persistence
+- ✅ localStorage persistence with Zustand persist
 - ✅ Tag-based filtering
+- ✅ Dark mode with system preference detection
+- ✅ Keyboard shortcuts with visual guide
+- ✅ Error boundaries for graceful error handling
+- ✅ Toast notifications for user feedback
+- ✅ Accessible modals and confirm dialogs
+- ✅ Code splitting with lazy loading
+- ✅ Optimized state management with selectors
+- ✅ 404 Not Found page
 
 ### Future Features
 
@@ -225,8 +303,8 @@ module.exports = {
 - [ ] Export notes to PDF/HTML
 - [ ] Rich text editor option
 - [ ] Note templates
-- [ ] Dark mode support
-- [ ] Keyboard shortcuts
+- [ ] Note pinning and favorites
+- [ ] Drag and drop note reordering
 
 ## Deployment
 
@@ -257,6 +335,20 @@ Supports the last 2 versions of modern browsers:
 - Mozilla Firefox
 - Safari
 - Microsoft Edge
+
+## Performance
+
+- **Code Splitting**: Pages are lazy-loaded for faster initial load
+- **Memoization**: Components use `memo`, `useMemo`, and `useCallback`
+- **Optimized Selectors**: Zustand selectors prevent unnecessary re-renders
+- **Debounced Updates**: Auto-save and markdown preview are debounced
+
+## Accessibility
+
+- **Focus Management**: Modals trap focus and restore on close
+- **Keyboard Navigation**: Full keyboard support with shortcuts
+- **ARIA Labels**: Proper labeling for screen readers
+- **Color Contrast**: Dark mode maintains WCAG contrast ratios
 
 ## Contributing
 

@@ -59,7 +59,7 @@ const buildTagsById = (tags: Tag[]): Record<string, Tag> => {
 export const useNotesStore = create<NotesState>()(
   devtools(
     persist(
-      (set, _get) => ({
+      (set) => ({
         // Initial state
         notes: [],
         tags: [],

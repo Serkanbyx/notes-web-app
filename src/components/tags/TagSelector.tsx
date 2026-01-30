@@ -72,7 +72,7 @@ const TagSelector = memo(function TagSelector({
   }, []);
 
   const handleColorSelect = useCallback((color: TagColor) => {
-    setNewTagColor(color);
+    setNewTagColor(color as TagColor);
   }, []);
 
   const handleKeyDown = useCallback(
