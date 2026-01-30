@@ -10,19 +10,31 @@
   
   body {
     @apply bg-gray-50 text-gray-900 antialiased;
+    @apply dark:bg-gray-900 dark:text-gray-100;
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar - Light mode */
   ::-webkit-scrollbar {
     @apply w-2;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-gray-100;
+    @apply bg-gray-100 dark:bg-gray-800;
   }
 
   ::-webkit-scrollbar-thumb {
     @apply bg-gray-300 rounded-full hover:bg-gray-400;
+    @apply dark:bg-gray-600 dark:hover:bg-gray-500;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(156 163 175) rgb(243 244 246);
+  }
+
+  .dark * {
+    scrollbar-color: rgb(75 85 99) rgb(31 41 55);
   }
 }
 
@@ -31,36 +43,43 @@
   .btn {
     @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 
            focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply dark:focus:ring-offset-gray-800;
   }
 
   .btn-primary {
     @apply btn bg-primary-600 text-white hover:bg-primary-700 
            focus:ring-primary-500;
+    @apply dark:bg-primary-500 dark:hover:bg-primary-600;
   }
 
   .btn-secondary {
     @apply btn bg-gray-200 text-gray-800 hover:bg-gray-300 
            focus:ring-gray-400;
+    @apply dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600;
   }
 
   .btn-danger {
     @apply btn bg-red-600 text-white hover:bg-red-700 
            focus:ring-red-500;
+    @apply dark:bg-red-500 dark:hover:bg-red-600;
   }
 
   .input {
     @apply w-full px-4 py-2 border border-gray-300 rounded-lg
            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
            placeholder:text-gray-400 transition-all duration-200;
+    @apply dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100
+           dark:placeholder:text-gray-500;
   }
 
   .card {
     @apply bg-white rounded-xl shadow-sm border border-gray-200 
            hover:shadow-md transition-shadow duration-200;
+    @apply dark:bg-gray-800 dark:border-gray-700;
   }
 }
 
-/* Markdown preview styles */
+/* Markdown preview styles - Light mode */
 .prose-notes {
   max-width: none;
   font-size: 0.875rem;
@@ -69,26 +88,32 @@
 
 .prose-notes h1 {
   @apply text-2xl font-bold text-gray-900 mb-4 mt-6;
+  @apply dark:text-gray-100;
 }
 
 .prose-notes h2 {
   @apply text-xl font-semibold text-gray-800 mb-3 mt-5;
+  @apply dark:text-gray-200;
 }
 
 .prose-notes h3 {
   @apply text-lg font-medium text-gray-700 mb-2 mt-4;
+  @apply dark:text-gray-300;
 }
 
 .prose-notes p {
   @apply text-gray-600 mb-4 leading-relaxed;
+  @apply dark:text-gray-300;
 }
 
 .prose-notes ul {
   @apply list-disc list-inside mb-4 text-gray-600;
+  @apply dark:text-gray-300;
 }
 
 .prose-notes ol {
   @apply list-decimal list-inside mb-4 text-gray-600;
+  @apply dark:text-gray-300;
 }
 
 .prose-notes li {
@@ -97,10 +122,12 @@
 
 .prose-notes code {
   @apply bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-primary-700;
+  @apply dark:bg-gray-700 dark:text-primary-300;
 }
 
 .prose-notes pre {
   @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  @apply dark:bg-gray-950;
 }
 
 .prose-notes pre code {
@@ -109,14 +136,17 @@
 
 .prose-notes blockquote {
   @apply border-l-4 border-primary-500 pl-4 italic text-gray-600 mb-4;
+  @apply dark:text-gray-400 dark:border-primary-400;
 }
 
 .prose-notes a {
   @apply text-primary-600 hover:text-primary-700 underline;
+  @apply dark:text-primary-400 dark:hover:text-primary-300;
 }
 
 .prose-notes hr {
   @apply border-gray-200 my-6;
+  @apply dark:border-gray-700;
 }
 
 .prose-notes img {
@@ -130,8 +160,39 @@
 .prose-notes th,
 .prose-notes td {
   @apply border border-gray-300 px-3 py-2 text-left;
+  @apply dark:border-gray-600;
 }
 
 .prose-notes th {
   @apply bg-gray-100 font-semibold;
+  @apply dark:bg-gray-700;
+}
+
+/* Checkbox styles for dark mode */
+.prose-notes input[type="checkbox"] {
+  @apply mr-2;
+}
+
+/* Focus visible for better accessibility */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-primary-500;
+}
+
+/* Smooth transitions for theme switching */
+html {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Animation utilities */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
 }

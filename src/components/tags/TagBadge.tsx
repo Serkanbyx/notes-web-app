@@ -1,3 +1,5 @@
+import { memo, useCallback } from 'react';
+
 interface TagBadgeProps {
   name: string;
   color: string;
@@ -9,8 +11,9 @@ interface TagBadgeProps {
 
 /**
  * Tag badge component for displaying tags
+ * Memoized for performance, supports dark mode
  */
-function TagBadge({
+const TagBadge = memo(function TagBadge({
   name,
   color,
   onRemove,
@@ -18,8 +21,27 @@ function TagBadge({
   isSelected = false,
   size = 'md',
 }: TagBadgeProps) {
-  const sizeClasses = size === 'sm' ? 'text-xs px-2 py-0.5' : 'text-sm px-2.5 py-1';
-  
+  const sizeClasses =
+    size === 'sm' ? 'text-xs px-2 py-0.5' : 'text-sm px-2.5 py-1';
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        onClick();
+      }
+    },
+    [onClick]
+  );
+
+  const handleRemoveClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onRemove?.();
+    },
+    [onRemove]
+  );
+
   return (
     <span
       className={`
@@ -27,7 +49,7 @@ function TagBadge({
         transition-all duration-200
         ${sizeClasses}
         ${onClick ? 'cursor-pointer hover:opacity-80' : ''}
-        ${isSelected ? 'ring-2 ring-offset-1' : ''}
+        ${isSelected ? 'ring-2 ring-offset-1 dark:ring-offset-gray-800' : ''}
       `}
       style={{
         backgroundColor: `${color}20`,
@@ -38,16 +60,14 @@ function TagBadge({
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
-      onKeyDown={onClick ? (e) => e.key === 'Enter' && onClick() : undefined}
+      onKeyDown={handleKeyDown}
+      aria-pressed={onClick ? isSelected : undefined}
     >
       {name}
       {onRemove && (
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onRemove();
-          }}
-          className="ml-0.5 hover:opacity-70 focus:outline-none"
+          onClick={handleRemoveClick}
+          className="ml-0.5 hover:opacity-70 focus:outline-none focus:ring-1 focus:ring-current rounded-full"
           aria-label={`${name} etiketini kaldır`}
         >
           <svg
@@ -66,6 +86,6 @@ function TagBadge({
       )}
     </span>
   );
-}
+});
 
 export default TagBadge;

@@ -13,13 +13,21 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 /**
- * Variant styles mapping
+ * Variant styles mapping with dark mode support
  */
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
-  secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400',
-  danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-  ghost: 'bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-300',
+  primary:
+    'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 ' +
+    'dark:bg-primary-500 dark:hover:bg-primary-600',
+  secondary:
+    'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400 ' +
+    'dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600',
+  danger:
+    'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 ' +
+    'dark:bg-red-500 dark:hover:bg-red-600',
+  ghost:
+    'bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-300 ' +
+    'dark:text-gray-300 dark:hover:bg-gray-800',
 };
 
 /**
@@ -33,6 +41,7 @@ const sizeStyles: Record<ButtonSize, string> = {
 
 /**
  * Reusable Button component with multiple variants
+ * Supports dark mode
  */
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -48,7 +57,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+      'inline-flex items-center justify-center font-medium rounded-lg ' +
+      'transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ' +
+      'disabled:opacity-50 disabled:cursor-not-allowed ' +
+      'dark:focus:ring-offset-gray-800';
 
     return (
       <button

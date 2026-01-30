@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useCallback, memo } from 'react';
 
 interface SearchBarProps {
   value: string;
@@ -8,22 +8,30 @@ interface SearchBarProps {
 
 /**
  * Search bar component with icon
+ * Supports dark mode with memoized handlers
  */
-function SearchBar({ value, onChange, placeholder = 'Ara...' }: SearchBarProps) {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
-  };
+const SearchBar = memo(function SearchBar({
+  value,
+  onChange,
+  placeholder = 'Ara...',
+}: SearchBarProps) {
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      onChange(e.target.value);
+    },
+    [onChange]
+  );
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     onChange('');
-  };
+  }, [onChange]);
 
   return (
     <div className="relative">
       {/* Search Icon */}
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
         <svg
-          className="h-5 w-5 text-gray-400"
+          className="h-5 w-5 text-gray-400 dark:text-gray-500"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
@@ -47,6 +55,9 @@ function SearchBar({ value, onChange, placeholder = 'Ara...' }: SearchBarProps) 
           w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg
           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
           placeholder:text-gray-400 transition-all duration-200
+          bg-white dark:bg-gray-800
+          dark:border-gray-600 dark:text-gray-100
+          dark:placeholder:text-gray-500
         "
         aria-label="Notlarda ara"
       />
@@ -55,7 +66,10 @@ function SearchBar({ value, onChange, placeholder = 'Ara...' }: SearchBarProps) 
       {value && (
         <button
           onClick={handleClear}
-          className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+          className="absolute inset-y-0 right-0 pr-3 flex items-center 
+                     text-gray-400 hover:text-gray-600
+                     dark:text-gray-500 dark:hover:text-gray-300
+                     focus:outline-none"
           aria-label="Aramayı temizle"
         >
           <svg
@@ -75,6 +89,6 @@ function SearchBar({ value, onChange, placeholder = 'Ara...' }: SearchBarProps) 
       )}
     </div>
   );
-}
+});
 
 export default SearchBar;
