@@ -6,8 +6,8 @@ import { z } from 'zod';
 export const noteSchema = z.object({
   title: z
     .string()
-    .min(1, 'Başlık zorunludur')
-    .max(100, 'Başlık en fazla 100 karakter olabilir'),
+    .min(1, 'Title is required')
+    .max(100, 'Title can be at most 100 characters'),
   content: z.string().default(''),
   tags: z.array(z.string()).default([]),
 });
@@ -18,9 +18,9 @@ export const noteSchema = z.object({
 export const tagSchema = z.object({
   name: z
     .string()
-    .min(1, 'Tag adı zorunludur')
-    .max(30, 'Tag adı en fazla 30 karakter olabilir'),
-  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Geçerli bir renk seçiniz'),
+    .min(1, 'Tag name is required')
+    .max(30, 'Tag name can be at most 30 characters'),
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Please select a valid color'),
 });
 
 /**

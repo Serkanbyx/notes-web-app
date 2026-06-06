@@ -105,9 +105,9 @@ const ThemeToggle = memo(function ThemeToggle() {
   // Get aria label
   const ariaLabel = useMemo(() => {
     const labels: Record<Theme, string> = {
-      light: 'Açık tema aktif, karanlık temaya geç',
-      dark: 'Karanlık tema aktif, sistem temasına geç',
-      system: 'Sistem teması aktif, açık temaya geç',
+      light: 'Light theme active, switch to dark theme',
+      dark: 'Dark theme active, switch to system theme',
+      system: 'System theme active, switch to light theme',
     };
     return labels[theme];
   }, [theme]);

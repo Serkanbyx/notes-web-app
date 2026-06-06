@@ -49,8 +49,8 @@ const Footer = memo(function Footer() {
                        focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
                        dark:focus:ring-offset-gray-800
                        transition-colors group"
-            aria-label="Klavye kısayollarını göster"
-            title={`Klavye kısayolları (${getModifierKey()}+/)`}
+            aria-label="Show keyboard shortcuts"
+            title={`Keyboard shortcuts (${getModifierKey()}+/)`}
           >
             <svg
               className="w-5 h-5"

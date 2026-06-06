@@ -47,7 +47,7 @@ function NoteForm({ initialData, onSubmit, onChange }: NoteFormProps) {
       <div className="mb-4">
         <Input
           {...register('title')}
-          placeholder="Not başlığı"
+          placeholder="Note title"
           error={errors.title?.message}
           className="text-xl font-semibold"
           autoFocus
@@ -84,7 +84,7 @@ function NoteForm({ initialData, onSubmit, onChange }: NoteFormProps) {
 
       {/* Hidden submit button (form is submitted via autosave or explicit action) */}
       <button type="submit" className="hidden" aria-hidden="true">
-        Kaydet
+        Save
       </button>
     </form>
   );

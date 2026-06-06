@@ -13,7 +13,7 @@ const PageLoader = memo(function PageLoader() {
         <div className="w-12 h-12 border-4 border-gray-200 dark:border-gray-700 border-t-primary-500 rounded-full animate-spin" />
       </div>
       <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-        Yükleniyor...
+        Loading...
       </p>
     </div>
   );

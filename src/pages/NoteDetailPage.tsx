@@ -110,7 +110,7 @@ function NoteDetailPage() {
   const handleDelete = useCallback(() => {
     const noteId = createdNoteId.current || id;
     // TODO: Replace with accessible modal in a11y phase
-    if (noteId && window.confirm('Bu notu silmek istediğinize emin misiniz?')) {
+    if (noteId && window.confirm('Are you sure you want to delete this note?')) {
       deleteNote(noteId);
       navigate('/');
     }
@@ -148,12 +148,12 @@ function NoteDetailPage() {
           />
         </svg>
         <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-          Not bulunamadı
+          Note not found
         </h2>
         <p className="text-gray-500 dark:text-gray-400 mb-4">
-          Aradığınız not mevcut değil veya silinmiş olabilir.
+          The note you are looking for does not exist or may have been deleted.
         </p>
-        <Button onClick={handleBack}>Ana Sayfaya Dön</Button>
+        <Button onClick={handleBack}>Back to Home</Button>
       </div>
     );
   }
@@ -168,7 +168,7 @@ function NoteDetailPage() {
             onClick={handleBack}
             className="lg:hidden p-2 -ml-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100
                        focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
-            aria-label="Geri dön"
+            aria-label="Go back"
           >
             <svg
               className="w-6 h-6"
@@ -209,7 +209,7 @@ function NoteDetailPage() {
                   />
                 </svg>
                 <span className="text-yellow-600 dark:text-yellow-400">
-                  Kaydediliyor...
+                  Saving...
                 </span>
               </>
             )}
@@ -227,7 +227,7 @@ function NoteDetailPage() {
                   />
                 </svg>
                 <span className="text-green-600 dark:text-green-400">
-                  Kaydedildi
+                  Saved
                 </span>
               </>
             )}
@@ -245,7 +245,7 @@ function NoteDetailPage() {
                   />
                 </svg>
                 <span className="text-gray-500 dark:text-gray-400">
-                  Kaydedilmemiş değişiklikler
+                  Unsaved changes
                 </span>
               </>
             )}
@@ -269,7 +269,7 @@ function NoteDetailPage() {
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                 />
               </svg>
-              Sil
+              Delete
             </Button>
           )}
         </div>

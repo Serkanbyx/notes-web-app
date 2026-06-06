@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, CSSProperties } from 'react';
 
 interface TagBadgeProps {
   name: string;
@@ -42,6 +42,14 @@ const TagBadge = memo(function TagBadge({
     [onRemove]
   );
 
+  // Use the tag color as the Tailwind ring color when selected
+  const badgeStyle: CSSProperties = {
+    backgroundColor: `${color}20`,
+    color,
+    borderColor: color,
+    ...(isSelected ? ({ '--tw-ring-color': color } as CSSProperties) : {}),
+  };
+
   return (
     <span
       className={`
@@ -51,12 +59,7 @@ const TagBadge = memo(function TagBadge({
         ${onClick ? 'cursor-pointer hover:opacity-80' : ''}
         ${isSelected ? 'ring-2 ring-offset-1 dark:ring-offset-gray-800' : ''}
       `}
-      style={{
-        backgroundColor: `${color}20`,
-        color: color,
-        borderColor: color,
-        ...(isSelected && { ringColor: color }),
-      }}
+      style={badgeStyle}
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
@@ -66,9 +69,10 @@ const TagBadge = memo(function TagBadge({
       {name}
       {onRemove && (
         <button
+          type="button"
           onClick={handleRemoveClick}
           className="ml-0.5 hover:opacity-70 focus:outline-none focus:ring-1 focus:ring-current rounded-full"
-          aria-label={`${name} etiketini kaldır`}
+          aria-label={`Remove ${name} tag`}
         >
           <svg
             className={size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'}

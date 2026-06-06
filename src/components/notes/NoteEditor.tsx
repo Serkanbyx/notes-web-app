@@ -50,7 +50,7 @@ const DebouncedMarkdownPreview = memo(function DebouncedMarkdownPreview({
   if (!debouncedContent) {
     return (
       <p className="text-gray-400 dark:text-gray-500 italic">
-        Önizleme için bir şeyler yazın...
+        Write something to see the preview...
       </p>
     );
   }
@@ -88,6 +88,7 @@ const ModeButton = memo(function ModeButton({
 
   return (
     <button
+      type="button"
       onClick={handleClick}
       className={`
         px-3 py-1.5 text-sm font-medium rounded-md transition-colors
@@ -119,7 +120,7 @@ const ModeButton = memo(function ModeButton({
 const NoteEditor = memo(function NoteEditor({
   content,
   onChange,
-  placeholder = 'Markdown ile yazmaya başlayın...',
+  placeholder = 'Start writing with Markdown...',
 }: NoteEditorProps) {
   const [mode, setMode] = useState<EditorMode>('write');
 
@@ -229,33 +230,33 @@ const NoteEditor = memo(function NoteEditor({
       <div
         className="flex items-center gap-1 mb-3 border-b border-gray-200 dark:border-gray-700 pb-3"
         role="tablist"
-        aria-label="Editör modu seçimi"
+        aria-label="Editor mode selection"
       >
         <ModeButton
           mode="write"
           currentMode={mode}
           onClick={handleModeChange}
           icon={writeIcon}
-          label="Yaz"
+          label="Write"
         />
         <ModeButton
           mode="preview"
           currentMode={mode}
           onClick={handleModeChange}
           icon={previewIcon}
-          label="Önizle"
+          label="Preview"
         />
         <ModeButton
           mode="split"
           currentMode={mode}
           onClick={handleModeChange}
           icon={splitIcon}
-          label="Bölünmüş"
+          label="Split"
         />
 
         {/* Markdown hint */}
         <span className="ml-auto text-xs text-gray-400 dark:text-gray-500">
-          Markdown desteklenir
+          Markdown supported
         </span>
       </div>
 
@@ -271,7 +272,7 @@ const NoteEditor = memo(function NoteEditor({
             onChange={handleContentChange}
             placeholder={placeholder}
             className={textareaClass}
-            aria-label="Not içeriği"
+            aria-label="Note content"
           />
         )}
 

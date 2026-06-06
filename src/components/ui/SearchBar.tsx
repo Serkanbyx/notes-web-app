@@ -59,18 +59,19 @@ const SearchBar = memo(function SearchBar({
           dark:border-gray-600 dark:text-gray-100
           dark:placeholder:text-gray-500
         "
-        aria-label="Notlarda ara"
+        aria-label="Search notes"
       />
 
       {/* Clear button */}
       {value && (
         <button
+          type="button"
           onClick={handleClear}
           className="absolute inset-y-0 right-0 pr-3 flex items-center 
                      text-gray-400 hover:text-gray-600
                      dark:text-gray-500 dark:hover:text-gray-300
                      focus:outline-none"
-          aria-label="Aramayı temizle"
+          aria-label="Clear search"
         >
           <svg
             className="h-5 w-5"

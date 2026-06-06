@@ -55,7 +55,7 @@ const TagSelector = memo(function TagSelector({
   const handleDeleteTag = useCallback(
     (tagId: string) => {
       // TODO: Replace with accessible modal in a11y phase
-      if (window.confirm('Bu etiketi silmek istediğinize emin misiniz?')) {
+      if (window.confirm('Are you sure you want to delete this tag?')) {
         deleteTag(tagId);
       }
     },
@@ -90,14 +90,14 @@ const TagSelector = memo(function TagSelector({
   return (
     <div className="space-y-3">
       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-        Etiketler
+        Tags
       </label>
 
       {/* Existing tags */}
       <div
         className="flex flex-wrap gap-2"
         role="group"
-        aria-label="Etiket seçimi"
+        aria-label="Tag selection"
       >
         {tags.map((tag) => (
           <TagBadge
@@ -119,21 +119,21 @@ const TagSelector = memo(function TagSelector({
             value={newTagName}
             onChange={(e) => setNewTagName(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Etiket adı"
+            placeholder="Tag name"
             className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md
                        bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
                        focus:outline-none focus:ring-2 focus:ring-primary-500
                        placeholder:text-gray-400 dark:placeholder:text-gray-500"
             maxLength={30}
             autoFocus
-            aria-label="Yeni etiket adı"
+            aria-label="New tag name"
           />
 
           {/* Color picker */}
           <div
             className="flex flex-wrap gap-2"
             role="radiogroup"
-            aria-label="Etiket rengi seçimi"
+            aria-label="Tag color selection"
           >
             {TAG_COLORS.map((color) => (
               <button
@@ -147,7 +147,7 @@ const TagSelector = memo(function TagSelector({
                   ${newTagColor === color ? 'ring-2 ring-offset-2 ring-gray-400 dark:ring-offset-gray-800 scale-110' : ''}
                 `}
                 style={{ backgroundColor: color }}
-                aria-label={`Renk seç: ${color}`}
+                aria-label={`Select color: ${color}`}
                 aria-pressed={newTagColor === color}
                 role="radio"
                 aria-checked={newTagColor === color}
@@ -161,15 +161,16 @@ const TagSelector = memo(function TagSelector({
               onClick={handleCreateTag}
               disabled={!newTagName.trim()}
             >
-              Ekle
+              Add
             </Button>
             <Button size="sm" variant="secondary" onClick={handleCancelCreating}>
-              İptal
+              Cancel
             </Button>
           </div>
         </div>
       ) : (
         <button
+          type="button"
           onClick={handleStartCreating}
           className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 
                      flex items-center gap-1
@@ -190,7 +191,7 @@ const TagSelector = memo(function TagSelector({
               d="M12 4v16m8-8H4"
             />
           </svg>
-          Yeni etiket oluştur
+          Create new tag
         </button>
       )}
     </div>

@@ -11,24 +11,24 @@ interface NotesState {
   notes: Note[];
   tags: Tag[];
   selectedNote: Note | null;
-  
+
   // Computed lookup map for O(1) tag access
   tagsById: Record<string, Tag>;
-  
+
   // Filters
   searchQuery: string;
   selectedTags: string[];
-  
+
   // Note actions
   addNote: (data: NoteFormData) => Note;
   updateNote: (id: string, updates: Partial<NoteFormData>) => void;
   deleteNote: (id: string) => void;
   selectNote: (note: Note | null) => void;
-  
+
   // Tag actions
   addTag: (data: TagFormData) => void;
   deleteTag: (id: string) => void;
-  
+
   // Filter actions
   setSearchQuery: (query: string) => void;
   setSelectedTags: (tags: string[]) => void;
@@ -37,9 +37,19 @@ interface NotesState {
 }
 
 /**
- * Storage keys for localStorage
+ * Storage key for localStorage
  */
 const STORAGE_KEY = 'notes-app-storage';
+
+/**
+ * Default tags seeded for first-time users
+ */
+const getDefaultTags = (): Tag[] => [
+  { id: 'tag-1', name: 'Personal', color: '#3b82f6' },
+  { id: 'tag-2', name: 'Work', color: '#22c55e' },
+  { id: 'tag-3', name: 'Idea', color: '#eab308' },
+  { id: 'tag-4', name: 'Important', color: '#ef4444' },
+];
 
 /**
  * Helper to build tagsById lookup map
@@ -51,6 +61,8 @@ const buildTagsById = (tags: Tag[]): Record<string, Tag> => {
   }, {} as Record<string, Tag>);
 };
 
+const initialTags = getDefaultTags();
+
 /**
  * Zustand store for notes management
  * Uses persist middleware for automatic localStorage sync
@@ -60,11 +72,11 @@ export const useNotesStore = create<NotesState>()(
   devtools(
     persist(
       (set) => ({
-        // Initial state
+        // Initial state (used for first-time users; persisted data overrides on rehydrate)
         notes: [],
-        tags: [],
+        tags: initialTags,
         selectedNote: null,
-        tagsById: {},
+        tagsById: buildTagsById(initialTags),
         searchQuery: '',
         selectedTags: [],
 
@@ -300,7 +312,7 @@ export const selectSelectedTags = (state: NotesState) => state.selectedTags;
  */
 export const selectFilteredNotes = (state: NotesState) => {
   const { notes, searchQuery, selectedTags } = state;
-  
+
   // Early return if no filters
   if (searchQuery.trim() === '' && selectedTags.length === 0) {
     return notes;

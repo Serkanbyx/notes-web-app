@@ -14,7 +14,7 @@ interface NoteCardProps {
  */
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('tr-TR', {
+  return date.toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -85,7 +85,7 @@ const NoteCard = memo(function NoteCard({
       `}
       role="button"
       tabIndex={0}
-      aria-label={`Not: ${note.title}`}
+      aria-label={`Note: ${note.title}`}
       aria-selected={isSelected}
     >
       {/* Title */}

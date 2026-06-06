@@ -35,7 +35,7 @@ interface UseLocalStorageResult<T> {
  */
 const isLocalStorageAvailable = (): boolean => {
   if (typeof window === 'undefined') return false;
-  
+
   try {
     const testKey = '__storage_test__';
     window.localStorage.setItem(testKey, testKey);
@@ -66,7 +66,7 @@ const isQuotaExceeded = (error: unknown): boolean => {
  * - QuotaExceededError handling
  * - Cross-tab synchronization (including deletions)
  * - Error tracking
- * 
+ *
  * @param key - localStorage key
  * @param initialValue - Initial value if key doesn't exist
  */
@@ -87,13 +87,13 @@ export function useLocalStorage<T>(
     try {
       const item = localStorage.getItem(key);
       if (item === null) return initialValue;
-      
+
       return JSON.parse(item) as T;
     } catch (err) {
       console.error(`Error reading localStorage key "${key}":`, err);
       setError({
         type: 'read_error',
-        message: `localStorage'dan okuma hatası: ${key}`,
+        message: `Failed to read from localStorage: ${key}`,
         originalError: err instanceof Error ? err : undefined,
       });
       return initialValue;
@@ -122,14 +122,14 @@ export function useLocalStorage<T>(
           console.error(`localStorage quota exceeded for key "${key}"`);
           setError({
             type: 'quota_exceeded',
-            message: 'Depolama alanı dolu. Lütfen bazı notları silin.',
+            message: 'Storage is full. Please delete some notes.',
             originalError: err instanceof Error ? err : undefined,
           });
         } else {
           console.error(`Error setting localStorage key "${key}":`, err);
           setError({
             type: 'write_error',
-            message: `localStorage'a yazma hatası: ${key}`,
+            message: `Failed to write to localStorage: ${key}`,
             originalError: err instanceof Error ? err : undefined,
           });
         }
@@ -152,7 +152,7 @@ export function useLocalStorage<T>(
       console.error(`Error removing localStorage key "${key}":`, err);
       setError({
         type: 'write_error',
-        message: `localStorage'dan silme hatası: ${key}`,
+        message: `Failed to remove from localStorage: ${key}`,
         originalError: err instanceof Error ? err : undefined,
       });
     }
@@ -179,7 +179,7 @@ export function useLocalStorage<T>(
         console.error(`Error parsing storage event for key "${key}":`, err);
         setError({
           type: 'parse_error',
-          message: `Veri ayrıştırma hatası: ${key}`,
+          message: `Failed to parse data: ${key}`,
           originalError: err instanceof Error ? err : undefined,
         });
       }

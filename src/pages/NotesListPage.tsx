@@ -46,23 +46,23 @@ function NotesListPage() {
         {notes.length === 0 ? (
           <>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              Notes App'e Hoş Geldiniz
+              Welcome to Notes App
             </h2>
             <p className="text-gray-500 dark:text-gray-400 mb-6">
-              Markdown destekli not alma uygulaması ile fikirlerinizi düzenleyin.
-              İlk notunuzu oluşturarak başlayın!
+              Organize your ideas with this Markdown-powered note-taking app.
+              Get started by creating your first note!
             </p>
           </>
         ) : (
           <>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              Bir not seçin
+              Select a note
             </h2>
             <p className="text-gray-500 dark:text-gray-400 mb-6">
-              Sol panelden bir not seçin veya yeni bir not oluşturun.
+              Select a note from the left panel or create a new one.
               <br />
               <span className="text-sm">
-                {filteredNotes.length} / {notes.length} not gösteriliyor
+                Showing {filteredNotes.length} / {notes.length} notes
               </span>
             </p>
           </>
@@ -83,13 +83,13 @@ function NotesListPage() {
               d="M12 4v16m8-8H4"
             />
           </svg>
-          Yeni Not Oluştur
+          Create New Note
         </Button>
 
         {/* Features list */}
         <div className="mt-12 text-left">
           <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
-            Özellikler
+            Features
           </h3>
           <ul className="space-y-3">
             <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
@@ -104,7 +104,7 @@ function NotesListPage() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>Markdown desteği ile zengin içerik oluşturun</span>
+              <span>Create rich content with Markdown support</span>
             </li>
             <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
               <svg
@@ -118,7 +118,7 @@ function NotesListPage() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>Etiketler ile notlarınızı kategorize edin</span>
+              <span>Categorize your notes with tags</span>
             </li>
             <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
               <svg
@@ -132,7 +132,7 @@ function NotesListPage() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>Otomatik kaydetme - hiçbir şey kaybolmaz</span>
+              <span>Auto-save - nothing gets lost</span>
             </li>
             <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
               <svg
@@ -146,7 +146,7 @@ function NotesListPage() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>Çevrimdışı çalışır - internet gerekmez</span>
+              <span>Works offline - no internet required</span>
             </li>
           </ul>
         </div>

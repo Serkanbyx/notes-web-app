@@ -162,7 +162,7 @@ const Modal = memo(function Modal({
               onClick={onClose}
               className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300
                          focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg"
-              aria-label="Kapat"
+              aria-label="Close"
             >
               <svg
                 className="w-5 h-5"
@@ -211,8 +211,8 @@ export const ConfirmDialog = memo(function ConfirmDialog({
   onConfirm,
   title,
   message,
-  confirmText = 'Onayla',
-  cancelText = 'İptal',
+  confirmText = 'Confirm',
+  cancelText = 'Cancel',
   variant = 'danger',
 }: ConfirmDialogProps) {
   const handleConfirm = useCallback(() => {

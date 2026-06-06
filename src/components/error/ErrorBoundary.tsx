@@ -72,20 +72,20 @@ class ErrorBoundary extends Component<Props, State> {
 
             {/* Error title */}
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              Bir hata oluştu
+              Something went wrong
             </h1>
 
             {/* Error message */}
             <p className="text-gray-500 dark:text-gray-400 mb-6">
-              Üzgünüz, beklenmedik bir hata oluştu. Lütfen sayfayı yenileyin veya
-              daha sonra tekrar deneyin.
+              Sorry, an unexpected error occurred. Please reload the page or
+              try again later.
             </p>
 
             {/* Error details (development only) */}
             {import.meta.env.DEV && this.state.error && (
               <details className="mb-6 text-left">
                 <summary className="text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:text-gray-700 dark:hover:text-gray-300">
-                  Hata detayları
+                  Error details
                 </summary>
                 <pre className="mt-2 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-xs text-red-600 dark:text-red-400 overflow-auto">
                   {this.state.error.toString()}
@@ -105,7 +105,7 @@ class ErrorBoundary extends Component<Props, State> {
                            dark:focus:ring-offset-gray-900
                            transition-colors"
               >
-                Tekrar Dene
+                Try Again
               </button>
               <button
                 onClick={this.handleReload}
@@ -117,7 +117,7 @@ class ErrorBoundary extends Component<Props, State> {
                            dark:focus:ring-offset-gray-900
                            transition-colors"
               >
-                Sayfayı Yenile
+                Reload Page
               </button>
             </div>
           </div>

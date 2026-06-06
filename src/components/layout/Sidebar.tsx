@@ -70,14 +70,14 @@ function Sidebar() {
               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          Notlarım
+          My Notes
         </h1>
 
         {/* Search */}
         <SearchBar
           value={searchQuery}
           onChange={setSearchQuery}
-          placeholder="Notlarda ara..."
+          placeholder="Search notes..."
         />
       </div>
 
@@ -85,12 +85,12 @@ function Sidebar() {
       {tags.length > 0 && (
         <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
           <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
-            Etiketlere göre filtrele
+            Filter by tags
           </p>
           <div
             className="flex flex-wrap gap-1.5"
             role="group"
-            aria-label="Etiket filtreleri"
+            aria-label="Tag filters"
           >
             {tags.map((tag) => (
               <TagBadge
@@ -134,11 +134,11 @@ function Sidebar() {
               />
             </svg>
             <p className="text-gray-500 dark:text-gray-400 text-sm">
-              {hasFilters ? 'Eşleşen not bulunamadı' : 'Henüz not yok'}
+              {hasFilters ? 'No matching notes found' : 'No notes yet'}
             </p>
             {!hasFilters && (
               <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">
-                Yeni bir not oluşturmak için aşağıdaki butona tıklayın
+                Click the button below to create a new note
               </p>
             )}
           </div>
@@ -161,7 +161,7 @@ function Sidebar() {
               d="M12 4v16m8-8H4"
             />
           </svg>
-          Yeni Not
+          New Note
         </Button>
       </div>
 

@@ -46,13 +46,13 @@ function NotFoundPage() {
 
         {/* Title */}
         <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-3">
-          Sayfa Bulunamadı
+          Page Not Found
         </h1>
 
         {/* Description */}
         <p className="text-gray-500 dark:text-gray-400 mb-8">
-          Aradığınız sayfa mevcut değil, taşınmış veya silinmiş olabilir.
-          Ana sayfaya dönerek devam edebilirsiniz.
+          The page you are looking for does not exist, may have moved, or has
+          been deleted. You can return to the home page to continue.
         </p>
 
         {/* Action buttons */}
@@ -71,7 +71,7 @@ function NotFoundPage() {
                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
               />
             </svg>
-            Ana Sayfaya Git
+            Go to Home
           </Button>
           <Button onClick={handleGoBack} variant="secondary" size="lg">
             <svg
@@ -87,7 +87,7 @@ function NotFoundPage() {
                 d="M10 19l-7-7m0 0l7-7m-7 7h18"
               />
             </svg>
-            Geri Dön
+            Go Back
           </Button>
         </div>
       </div>

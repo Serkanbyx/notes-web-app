@@ -24,9 +24,8 @@ interface UseAutoSaveResult {
  * Features:
  * - Error handling with try-catch
  * - Save status tracking
- * - Deep equality check option
  * - SSR safety
- * 
+ *
  * @param callback - Function to call when auto-save triggers
  * @param data - Data to save
  * @param delay - Debounce delay in milliseconds (default: 1000ms)
@@ -59,12 +58,12 @@ export function useAutoSave<T>(
     try {
       setStatus('saving');
       setError(null);
-      
+
       // Execute callback (may be async)
       await callbackRef.current(dataRef.current);
-      
+
       setStatus('saved');
-      
+
       // Reset to idle after a short delay
       setTimeout(() => {
         setStatus('idle');
@@ -109,7 +108,7 @@ export function useAutoSave<T>(
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    
+
     // Execute save immediately
     executeSave();
   }, [executeSave]);

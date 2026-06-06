@@ -36,7 +36,7 @@ function App() {
   const handleSearch = useCallback(() => {
     // Find the search input in the sidebar
     const searchInput = document.querySelector(
-      'input[aria-label="Notlarda ara"]'
+      'input[aria-label="Search notes"]'
     ) as HTMLInputElement;
     if (searchInput) {
       searchInput.focus();

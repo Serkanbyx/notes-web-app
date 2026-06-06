@@ -70,13 +70,13 @@ const KeyboardShortcutsModal = memo(function KeyboardShortcutsModal({
   // Group shortcuts by category
   const shortcutGroups = [
     {
-      title: 'Genel',
+      title: 'General',
       shortcuts: DEFAULT_SHORTCUTS.filter((s) =>
         ['new-note', 'save', 'search', 'delete', 'shortcuts'].includes(s.key)
       ),
     },
     {
-      title: 'Editör Modları',
+      title: 'Editor Modes',
       shortcuts: DEFAULT_SHORTCUTS.filter((s) =>
         ['mode-write', 'mode-preview', 'mode-split'].includes(s.key)
       ),
@@ -102,13 +102,13 @@ const KeyboardShortcutsModal = memo(function KeyboardShortcutsModal({
             id="shortcuts-modal-title"
             className="text-lg font-semibold text-gray-900 dark:text-gray-100"
           >
-            Klavye Kısayolları
+            Keyboard Shortcuts
           </h2>
           <button
             onClick={onClose}
             className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300
                        focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg"
-            aria-label="Kapat"
+            aria-label="Close"
           >
             <svg
               className="w-5 h-5"
@@ -164,7 +164,7 @@ const KeyboardShortcutsModal = memo(function KeyboardShortcutsModal({
             <kbd className="px-1.5 py-0.5 text-xs font-mono bg-gray-200 dark:bg-gray-700 rounded">
               Esc
             </kbd>
-            {' '}tuşu ile kapatın
+            {' '}to close
           </p>
         </div>
       </div>

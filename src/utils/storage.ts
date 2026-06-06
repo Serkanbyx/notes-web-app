@@ -109,22 +109,22 @@ export const storage = {
    */
   getNotes: (): StorageResult<Note[]> => {
     if (!isStorageAvailable()) {
-      return { success: false, data: [], error: { type: 'read_error', message: 'localStorage kullanılamıyor' } };
+      return { success: false, data: [], error: { type: 'read_error', message: 'localStorage is not available' } };
     }
 
     try {
       const data = localStorage.getItem(NOTES_KEY);
       const notes = data ? JSON.parse(data) : [];
-      
+
       // Validate that it's an array
       if (!Array.isArray(notes)) {
-        return { success: false, data: [], error: { type: 'parse_error', message: 'Geçersiz not verisi' } };
+        return { success: false, data: [], error: { type: 'parse_error', message: 'Invalid notes data' } };
       }
-      
+
       return { success: true, data: notes };
     } catch (error) {
       console.error('Error reading notes from localStorage:', error);
-      return { success: false, data: [], error: { type: 'read_error', message: 'Notlar okunamadı' } };
+      return { success: false, data: [], error: { type: 'read_error', message: 'Failed to read notes' } };
     }
   },
 
@@ -133,27 +133,27 @@ export const storage = {
    */
   setNotes: (notes: Note[]): StorageResult<void> => {
     if (!isStorageAvailable()) {
-      return { success: false, error: { type: 'write_error', message: 'localStorage kullanılamıyor' } };
+      return { success: false, error: { type: 'write_error', message: 'localStorage is not available' } };
     }
 
     try {
       const dataString = JSON.stringify(notes);
-      
+
       // Check if there's enough space
       if (!hasEnoughSpace(dataString.length * 2)) {
-        return { success: false, error: { type: 'quota_exceeded', message: 'Depolama alanı dolu' } };
+        return { success: false, error: { type: 'quota_exceeded', message: 'Storage is full' } };
       }
-      
+
       localStorage.setItem(NOTES_KEY, dataString);
       return { success: true };
     } catch (error) {
       console.error('Error saving notes to localStorage:', error);
-      
+
       if (isQuotaExceeded(error)) {
-        return { success: false, error: { type: 'quota_exceeded', message: 'Depolama alanı dolu. Lütfen bazı notları silin.' } };
+        return { success: false, error: { type: 'quota_exceeded', message: 'Storage is full. Please delete some notes.' } };
       }
-      
-      return { success: false, error: { type: 'write_error', message: 'Notlar kaydedilemedi' } };
+
+      return { success: false, error: { type: 'write_error', message: 'Failed to save notes' } };
     }
   },
 
@@ -170,14 +170,14 @@ export const storage = {
       if (!data) {
         return { success: true, data: getDefaultTags() };
       }
-      
+
       const tags = JSON.parse(data);
-      
+
       // Validate that it's an array
       if (!Array.isArray(tags)) {
-        return { success: false, data: getDefaultTags(), error: { type: 'parse_error', message: 'Geçersiz etiket verisi' } };
+        return { success: false, data: getDefaultTags(), error: { type: 'parse_error', message: 'Invalid tags data' } };
       }
-      
+
       return { success: true, data: tags };
     } catch (error) {
       console.error('Error reading tags from localStorage:', error);
@@ -190,7 +190,7 @@ export const storage = {
    */
   setTags: (tags: Tag[]): StorageResult<void> => {
     if (!isStorageAvailable()) {
-      return { success: false, error: { type: 'write_error', message: 'localStorage kullanılamıyor' } };
+      return { success: false, error: { type: 'write_error', message: 'localStorage is not available' } };
     }
 
     try {
@@ -198,12 +198,12 @@ export const storage = {
       return { success: true };
     } catch (error) {
       console.error('Error saving tags to localStorage:', error);
-      
+
       if (isQuotaExceeded(error)) {
-        return { success: false, error: { type: 'quota_exceeded', message: 'Depolama alanı dolu' } };
+        return { success: false, error: { type: 'quota_exceeded', message: 'Storage is full' } };
       }
-      
-      return { success: false, error: { type: 'write_error', message: 'Etiketler kaydedilemedi' } };
+
+      return { success: false, error: { type: 'write_error', message: 'Failed to save tags' } };
     }
   },
 
@@ -212,7 +212,7 @@ export const storage = {
    */
   clearAll: (): StorageResult<void> => {
     if (!isStorageAvailable()) {
-      return { success: false, error: { type: 'write_error', message: 'localStorage kullanılamıyor' } };
+      return { success: false, error: { type: 'write_error', message: 'localStorage is not available' } };
     }
 
     try {
@@ -221,7 +221,7 @@ export const storage = {
       return { success: true };
     } catch (error) {
       console.error('Error clearing localStorage:', error);
-      return { success: false, error: { type: 'write_error', message: 'Veriler temizlenemedi' } };
+      return { success: false, error: { type: 'write_error', message: 'Failed to clear data' } };
     }
   },
 
@@ -233,7 +233,7 @@ export const storage = {
     const tagsResult = storage.getTags();
 
     if (!notesResult.success || !tagsResult.success) {
-      return { success: false, error: { type: 'read_error', message: 'Veriler okunamadı' } };
+      return { success: false, error: { type: 'read_error', message: 'Failed to read data' } };
     }
 
     return {
@@ -268,9 +268,9 @@ export const storage = {
  */
 function getDefaultTags(): Tag[] {
   return [
-    { id: 'tag-1', name: 'Kişisel', color: '#3b82f6' },
-    { id: 'tag-2', name: 'İş', color: '#22c55e' },
-    { id: 'tag-3', name: 'Fikir', color: '#eab308' },
-    { id: 'tag-4', name: 'Önemli', color: '#ef4444' },
+    { id: 'tag-1', name: 'Personal', color: '#3b82f6' },
+    { id: 'tag-2', name: 'Work', color: '#22c55e' },
+    { id: 'tag-3', name: 'Idea', color: '#eab308' },
+    { id: 'tag-4', name: 'Important', color: '#ef4444' },
   ];
 }

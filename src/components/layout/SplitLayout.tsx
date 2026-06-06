@@ -54,7 +54,7 @@ function SplitLayout({ children }: SplitLayoutProps) {
                    bg-white dark:bg-gray-800 rounded-lg shadow-md 
                    border border-gray-200 dark:border-gray-700
                    focus:outline-none focus:ring-2 focus:ring-primary-500"
-        aria-label={isSidebarOpen ? 'Menüyü kapat' : 'Menüyü aç'}
+        aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={isSidebarOpen}
       >
         {isSidebarOpen ? (

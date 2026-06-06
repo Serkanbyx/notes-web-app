@@ -98,7 +98,7 @@ const ToastContainer = memo(function ToastContainer() {
     <div
       className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full"
       role="region"
-      aria-label="Bildirimler"
+      aria-label="Notifications"
     >
       {toasts.map((toast) => (
         <ToastItem key={toast.id} toast={toast} />
@@ -163,7 +163,7 @@ const ToastItem = memo(function ToastItem({ toast }: ToastItemProps) {
       <button
         onClick={handleDismiss}
         className={`flex-shrink-0 p-1 rounded hover:bg-black/10 dark:hover:bg-white/10 ${colors.text}`}
-        aria-label="Bildirimi kapat"
+        aria-label="Dismiss notification"
       >
         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
           <path
