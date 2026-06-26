@@ -22,7 +22,7 @@ A modern, responsive note-taking application with Markdown support, a tagging sy
 
 ## Live Demo
 
-[🚀 View Live Demo](https://your-demo-url.netlify.app)
+[🚀 View Live Demo](https://notes-web-apppp.netlify.app/)
 
 ## Documentation
 
@@ -34,13 +34,21 @@ A modern, responsive note-taking application with Markdown support, a tagging sy
 
 The sidebar displays all your notes with search functionality and tag filters.
 
+![Main Screen](docs/screenshots/main-screen.png)
+
 ### Note Editor
 
 Full-featured Markdown editor with real-time preview, tag management, and a save-status indicator.
 
+![Note Editor](docs/screenshots/note-editor.png)
+
 ### Split View
 
 Side-by-side editing and preview for the best writing experience, in both light and dark themes.
+
+![Split View - Light Theme](docs/screenshots/split-view-light.png)
+
+![Split View - Dark Theme](docs/screenshots/split-view-dark.png)
 
 ## Technologies
 
